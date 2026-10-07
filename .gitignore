@@ -5,3 +5,4 @@ mlruns.db
 data/raw.csv
 __pycache__/
 *.pyc
+mlartifacts/

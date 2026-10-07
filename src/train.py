@@ -1,4 +1,5 @@
 from pathlib import Path
+import os
 import joblib
 import mlflow
 import mlflow.sklearn
@@ -7,7 +8,10 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.metrics import accuracy_score
 from sklearn.model_selection import GridSearchCV, train_test_split
 
-mlflow.set_tracking_uri("http://localhost:5000")
+# CI 中通过环境变量指向本地目录(mlruns)，无需服务器；本地默认连 localhost:5000
+mlflow.set_tracking_uri(
+    os.environ.get("MLFLOW_TRACKING_URI", "http://localhost:5000")
+)
 mlflow.set_experiment("wine-classifier")
 
 BASELINE_ACCURACY = 0.90

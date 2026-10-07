@@ -35,7 +35,8 @@ jobs:
     needs: data-and-tests
     runs-on: ubuntu-latest
     env:
-      MLFLOW_TRACKING_URI: sqlite:///mlruns.db
+      MLFLOW_TRACKING_URI: mlruns
+      MLFLOW_ALLOW_FILE_STORE: "true"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -66,7 +67,7 @@ jobs:
           name: trained-model
           path: src/
       - name: Log in to GitHub Container Registry
-        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+        run: echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ shturl.cc/IM }} --password-stdin
       - name: Build and push image
         run: |
           docker build -t ghcr.io/fttf51907-cmd/ai-cicd-pipeline/model:${{ github.sha }} .
